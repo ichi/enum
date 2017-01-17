@@ -86,4 +86,12 @@ abstract class Enum implements JsonSerializable
     public function __toString(){
         return (string) $this->id;
     }
+
+    public function __isset($name){
+        if(isset($this->{$name})) return true;
+
+        if(method_exists($this, $name)) return true;
+
+        return isset($this->contents()[$name]);
+    }
 }

@@ -87,4 +87,13 @@ class EnumTest extends \PHPUnit_Framework_TestCase
             Status::OTHER       => 'IDは9っぽい',
         ], Status::all('comment'));
     }
+
+    public function testIsset()
+    {
+        $status = Status::DISABLED();
+        $this->assertTrue(isset($status->id));
+        $this->assertTrue(isset($status->name));
+        $this->assertFalse(isset($status->visibility));
+        $this->assertFalse(isset($status->hoge));
+    }
 }
