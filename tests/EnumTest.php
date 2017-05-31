@@ -88,6 +88,21 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         ], Status::all('comment'));
     }
 
+    public function testFilter()
+    {
+        $this->assertEquals([
+            Status::VISIBLE => Status::VISIBLE(),
+            Status::OTHER => Status::OTHER(),
+        ], Status::filter('visibility'));
+
+        $this->assertEquals([
+            Status::DISABLED => Status::DISABLED(),
+            Status::INVISIBLE => Status::INVISIBLE(),
+        ], Status::filter(function($enum){
+            return strpos($enum->name, '不可') !== false;
+        }));
+    }
+
     public function testIsset()
     {
         $status = Status::DISABLED();

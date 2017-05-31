@@ -50,6 +50,15 @@ abstract class Enum implements JsonSerializable
         }, []);
     }
 
+    public static function filter($callback){
+        if (is_string($callback)) {
+            $callback = function($e)use($callback){ return $e->{$callback}; };
+        }
+
+        $all = static::all();
+        return is_callable($callback) ? array_filter($all, $callback) : array_filter($all);
+    }
+
     public function contents(){
         return @static::$contents[$this->id];
     }
